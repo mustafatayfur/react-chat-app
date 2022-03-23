@@ -1,5 +1,7 @@
 import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 import React from 'react'
+import Login from '../components/Authentication/Login'
+import Signup from '../components/Authentication/Signup'
 
 const Homepage = () => {
   return (
@@ -25,10 +27,10 @@ const Homepage = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {/*<Login/>*/}
+                <Login/>
               </TabPanel>
               <TabPanel>
-                {/*<Sign Up/>*/}
+                <Signup/>
               </TabPanel>
             </TabPanels>
           </Tabs>

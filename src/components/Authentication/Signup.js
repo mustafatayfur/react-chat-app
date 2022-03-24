@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react'
+import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 const Signup = () => {
@@ -8,9 +8,23 @@ const Signup = () => {
     const [email,setEmail] = useState()
     const [confirmpassword, setConfirmpassword] = useState()
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
+    const toast = useToast()
 
     const handleClick = ()=> setShow(!show)
-    const submitHandler = () => {}
+    const submitHandler = async() => {
+      setLoading(true)
+      if(!name || !email || !password || !confirmpassword){
+        toast({
+          title:"Please fill all the fields",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        })
+        return
+      }
+    }
 
   return (
     <VStack spacing="5px">

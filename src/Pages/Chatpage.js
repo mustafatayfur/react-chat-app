@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const Chatpage = () => {
     const [chats, setChats] = useState([])
     const fetchChats= async()=>{
-        const data = await axios.get('')
+        const data = await axios.get('0f66-31-223-82-2.ngrok.io/api')
         console.log(data)
         setChats(data)
     }

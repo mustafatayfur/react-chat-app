@@ -13,7 +13,7 @@ useEffect(() => {
   // setUser(userInfo)
 
   if(user){
-      history.push("/")
+      history.push("/auth")
   }
 }, [history])
 

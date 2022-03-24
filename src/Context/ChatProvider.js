@@ -13,7 +13,7 @@ useEffect(() => {
   console.log(userInfo)
   setUser(userInfo)
 
-  if(!userInfo){
+  if(userInfo){
       history.push("/")
     }
 },[history])

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Text, toast, Tooltip, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Text, Tooltip, useDisclosure, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 // import NotificationBadge from "react-notification-badge";
@@ -15,6 +15,7 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false)
+  const toast = useToast()
   
 
   const {
@@ -25,6 +26,7 @@ const SideDrawer = () => {
   } = ChatState();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const URL = "https://77ab-31-223-82-2.ngrok.io/api"
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -52,8 +54,8 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-
+      const { data } = await axios.get(`${URL}/user?search=${search}`, config);
+      console.log(data)
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -75,10 +77,10 @@ const SideDrawer = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.access_token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(`${URL}/chat`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -182,9 +184,9 @@ const SideDrawer = () => {
       ) : (
         searchResult?.map((user) => (
           <UserListItem
-            key={user._id}
+            key={user.access_token}
             user={user}
-            handleFunction={() => accessChat(user._id)}
+            handleFunction={() => accessChat(user.access_token)}
           />
         ))
       )}

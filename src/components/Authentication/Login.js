@@ -10,7 +10,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const toast = useToast()
     const history = useHistory()
-    const URL = "0f66-31-223-82-2.ngrok.io/api"
+    const URL = "https://77ab-31-223-82-2.ngrok.io/api"
 
     const handleClick = ()=> setShow(!show)
     const submitHandler = async() => {
@@ -26,7 +26,7 @@ const Login = () => {
         setLoading(false)
         return
       }
-      console.log(email, password)
+      // console.log(email, password)
       try {
         const config = {
           headers:{
@@ -34,7 +34,8 @@ const Login = () => {
           },
         }
         const {data} = await axios.post(`${URL}/auth/login`, {email, password}, config)
-        console.log(JSON.stringify(data))
+        console.log('userInfo',JSON.stringify(data))
+        console.log(data)
         toast({
           title:"Login Successful",
           status: "success",

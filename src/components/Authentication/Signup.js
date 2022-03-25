@@ -13,7 +13,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false)
     const toast = useToast()
     const history = useHistory()
-    const URL = "0f66-31-223-82-2.ngrok.io/api"
+    const URL = "https://77ab-31-223-82-2.ngrok.io/api"
 
     const handleClick = ()=> setShow(!show)
     const submitHandler = async() => {
@@ -44,7 +44,7 @@ const Signup = () => {
         })
         localStorage.setItem('userInfo',JSON.stringify(data))
         setLoading(false)
-        history.push("/chats")
+        history.push("/auth")
       } catch (error) {
         toast({
           title:"Error Occured!",

@@ -8,15 +8,15 @@ import { ChatState } from '../Context/ChatProvider'
 
 const Chatpage = () => {
     const { user } = ChatState()
-    // const [chats, setChats] = useState([])
-    // const fetchChats= async()=>{
-    //     const data = await axios.get('0f66-31-223-82-2.ngrok.io/api')
-    //     console.log(data)
-    //     setChats(data)
-    // }
-    // useEffect(()=>{
-    //     fetchChats()
-    // },[])
+    const [chats, setChats] = useState([])
+    const fetchChats= async()=>{
+        const data = await axios.get('https://77ab-31-223-82-2.ngrok.io/api')
+        console.log(data)
+        setChats(data)
+    }
+    useEffect(()=>{
+        fetchChats()
+    },[])
   return (
     <div style={{width:"100%"}}>
         {user && <SideDrawer/>}

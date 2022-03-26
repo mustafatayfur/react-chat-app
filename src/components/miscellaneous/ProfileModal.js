@@ -1,7 +1,6 @@
 import { ViewIcon } from '@chakra-ui/icons';
 import { Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react'
-import photo from '../../assets/background.jpg'
 
 const ProfileModal = ({ user, children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -20,6 +19,7 @@ const ProfileModal = ({ user, children }) => {
             fontFamily="Work sans"
             d="flex"
             justifyContent="center"
+            color="black"
           >
             {user.name}
           </ModalHeader>

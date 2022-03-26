@@ -2,7 +2,7 @@ import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, u
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-
+import { URL } from '../../config/ChatLogics'
 const Signup = () => {
 
     const [show, setShow]= useState(false)
@@ -13,7 +13,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false)
     const toast = useToast()
     const history = useHistory()
-    const URL = "https://77ab-31-223-82-2.ngrok.io/api"
+    
 
     const handleClick = ()=> setShow(!show)
     const submitHandler = async() => {

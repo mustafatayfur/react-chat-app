@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
-
+import { URL } from '../../config/ChatLogics'
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -17,6 +17,7 @@ const SideDrawer = () => {
   const [loadingChat, setLoadingChat] = useState(false)
   const toast = useToast()
   
+// console.log(searchResult)
 
   const {
     setSelectedChat,
@@ -24,9 +25,9 @@ const SideDrawer = () => {
     chats,
     setChats,
   } = ChatState();
+ 
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const URL = "https://77ab-31-223-82-2.ngrok.io/api"
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -71,7 +72,7 @@ const SideDrawer = () => {
   };
 
   const accessChat = async (userId) => {
-    console.log(userId);
+  
     try {
       setLoadingChat(true);
       const config = {
@@ -80,9 +81,9 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.access_token}`,
         },
       };
-      const { data } = await axios.post(`${URL}/chat`, { userId }, config);
-
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      const { data } = await axios.get(`${URL}/chat`, config);
+      console.log(data)
+      if (!chats.find((c) => c.id === data.id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
@@ -182,10 +183,11 @@ const SideDrawer = () => {
       {loading ? (
         <ChatLoading />
       ) : (
-        searchResult?.map((user) => (
+        searchResult?.map((result) => (
+          
           <UserListItem
-            key={user.access_token}
-            user={user}
+            key={result.id}
+            result={result}
             handleFunction={() => accessChat(user.access_token)}
           />
         ))

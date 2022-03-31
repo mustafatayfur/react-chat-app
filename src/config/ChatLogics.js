@@ -7,16 +7,6 @@ export const getSender = (allUsers) => {
   const User = allUsers.filter((item)=> item.id === chatUser.id)
   console.log(User)
   return User.length ? User[0].name : ""
-  // if(User === []){
-  //   return "boş array"
-  // }else{
-    
-   
-  //   return User[0].name
-  // }
-
-
-  // return chat[0]._id === loggedUser._id ? users[1].name : users[0].name;
 };
 
 export const isSameSenderMargin = (messages, m, i, userId) => {
@@ -65,6 +55,6 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
     return users[0]._id === loggedUser.user_id ? users[1] : users[0];
   };
 
-export const URL = "https://3da1-31-223-82-2.ngrok.io/api"
+export const URL = "https://f237-31-223-82-2.ngrok.io/api"
 
   

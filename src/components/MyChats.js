@@ -13,12 +13,11 @@ const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState([]);
   console.log("loggedUser:",loggedUser)
 
-  const { selectedChat, setSelectedChat, user, chats,setAllUsers, allUsers} = ChatState();
+  const { selectedChat, setSelectedChat, user, chats,setAllUsers, setChatUser, allUsers} = ChatState();
   console.log("Mychats-chats:",chats)
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
       const config = {
         headers: {
@@ -116,11 +115,7 @@ const MyChats = ({ fetchAgain }) => {
               borderRadius="lg"
               key={key}
             >
-            
-              <Text>
-              { getSender(allUsers) }
-              </Text>
-          
+              <Text>{chat[0].name}</Text>
             </Box>
           ))}
         </Stack>

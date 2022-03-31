@@ -71,38 +71,13 @@ const SideDrawer = () => {
   };
 
   const accessChat = async (result) => {
-  
-    try {
-      setLoadingChat(true);
-      // const config = {
-      //   headers: {
-      //     "Content-type": "application/json",
-      //     Authorization: `Bearer ${user.access_token}`,
-      //   },
-      // };
-      // const { data } = await axios.post(`${URL}/chat`, {sender: user.user_id, receiver: result.id , content:"aaaaaa"},config);
-      const config = {
-        headers: {
-          "Content-type" : "application/json",
-          "Authorization": `Bearer ${user.access_token}`,
-        },
-      };
-      const { data } = await axios.get(`${URL}/chat?userId=${result.id}`,config);
-      console.log(data)
-      setChats([data, ...chats]);
-      setSelectedChat(data);
-      setLoadingChat(false);
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error fetching the chat APİ",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }
+    const selectedChats = []
+    setLoadingChat(true);
+    selectedChats.push(result)
+    console.log(selectedChats)
+    setChats([selectedChats, ...chats])
+    setLoadingChat(false);
+    onClose();
   } 
   
   return (

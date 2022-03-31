@@ -2,12 +2,15 @@ import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from '@c
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { ChatState } from '../Context/ChatProvider';
-import { URL } from '../config/ChatLogics'
+import { getSenderFull, URL } from '../config/ChatLogics'
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import ScrollableChat from './ScrollableChat';
+import UpdateGroupChatModal from '../components/miscellaneous/UpdateGroupChatModal'
+import ProfileModal from './miscellaneous/ProfileModal';
+import './styles.css'
 
 
-const SingleChat = () => {
+const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState()
@@ -15,6 +18,7 @@ const SingleChat = () => {
 
   const { selectedChat, setSelectedChat, user, chatUser, notification, setNotification } =
   ChatState();
+  console.log(selectedChat)
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -59,9 +63,9 @@ const SingleChat = () => {
       setLoading(true);
       setNewMessage("")
       const { data } = await axios.post(`${URL}/chat`, {sender: user.user_id, receiver: selectedChat[0].id , content:newMessage},config);
-      console.log("newMessage:", data)
       setMessages([...messages, data]);
       setLoading(false);
+      console.log("messages:", messages)
   
     } catch (error) {
       toast({
@@ -105,19 +109,17 @@ const typingHandler = (e) => {
                 onClick={() => setSelectedChat("")}
               />
               {messages &&
-                selectedChat[0].name.toUpperCase()
-                //   fetchMessages={fetchMessages}
-                  //   fetchAgain={fetchAgain}
-                  //   setFetchAgain={setFetchAgain}
-                  // />  
-              }               
+                selectedChat[0].name.toUpperCase()}
+                <ProfileModal user = {selectedChat[0]}/>
+                  
+                             
             </Text>
             <Box
             d="flex"
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            bg="#E6E6FF"
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -146,7 +148,7 @@ const typingHandler = (e) => {
               
               <Input
                 variant="filled"
-                bg="#E0E0E0"
+                bg="#FFFFFF"
                 placeholder="Enter a message.."
                 value={newMessage}
                 onChange={typingHandler}

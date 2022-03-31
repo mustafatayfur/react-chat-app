@@ -1,3 +1,24 @@
+import { ChatState } from "../Context/ChatProvider";
+
+export const getSender = (allUsers) => {
+  const { chatUser} = ChatState();
+  console.log(chatUser)
+  console.log(allUsers)
+  const User = allUsers.filter((item)=> item.id === chatUser.id)
+  console.log(User)
+  return User.length ? User[0].name : ""
+  // if(User === []){
+  //   return "boş array"
+  // }else{
+    
+   
+  //   return User[0].name
+  // }
+
+
+  // return chat[0]._id === loggedUser._id ? users[1].name : users[0].name;
+};
+
 export const isSameSenderMargin = (messages, m, i, userId) => {
     // console.log(i === messages.length - 1);
   
@@ -38,14 +59,12 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
     return i > 0 && messages[i - 1].sender._id === m.sender._id;
   };
   
-  export const getSender = (loggedUser, users) => {
-    return users[0].id === loggedUser.id ? users[1].name : users[0].name;
-  };
+  
   
   export const getSenderFull = (loggedUser, users) => {
-    return users[0]._id === loggedUser._id ? users[1] : users[0];
+    return users[0]._id === loggedUser.user_id ? users[1] : users[0];
   };
 
-export const URL = "https://77ab-31-223-82-2.ngrok.io/api"
-// export default URL
+export const URL = "https://3da1-31-223-82-2.ngrok.io/api"
+
   

@@ -15,17 +15,15 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false)
-  const toast = useToast()
-  
-// console.log(searchResult)
-
+  const toast = useToast()  
   const {
     setSelectedChat,
     user,
     chats,
     setChats,
+    setChatUser    
   } = ChatState();
- 
+  console.log("SideDrawwer-chats",chats)
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -55,7 +53,8 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.get(`${URL}/user?search=${search}`, config);
+      const { data } = await axios.get(`${URL}/user?search=${search}`, config);      
+
       console.log(data)
       setLoading(false);
       setSearchResult(data);
@@ -71,25 +70,32 @@ const SideDrawer = () => {
     }
   };
 
-  const accessChat = async (userId) => {
+  const accessChat = async (result) => {
   
     try {
       setLoadingChat(true);
+      // const config = {
+      //   headers: {
+      //     "Content-type": "application/json",
+      //     Authorization: `Bearer ${user.access_token}`,
+      //   },
+      // };
+      // const { data } = await axios.post(`${URL}/chat`, {sender: user.user_id, receiver: result.id , content:"aaaaaa"},config);
       const config = {
         headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.access_token}`,
+          "Content-type" : "application/json",
+          "Authorization": `Bearer ${user.access_token}`,
         },
       };
-      const { data } = await axios.get(`${URL}/chat`, config);
+      const { data } = await axios.get(`${URL}/chat?userId=${result.id}`,config);
       console.log(data)
-      if (!chats.find((c) => c.id === data.id)) setChats([data, ...chats]);
+      setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
       toast({
-        title: "Error fetching the chat",
+        title: "Error fetching the chat APİ",
         description: error.message,
         status: "error",
         duration: 5000,
@@ -97,8 +103,8 @@ const SideDrawer = () => {
         position: "bottom-left",
       });
     }
-  }
-
+  } 
+  
   return (
     <>
     <Box
@@ -184,11 +190,11 @@ const SideDrawer = () => {
         <ChatLoading />
       ) : (
         searchResult?.map((result) => (
-          
-          <UserListItem
+           <UserListItem
             key={result.id}
             result={result}
-            handleFunction={() => accessChat(user.access_token)}
+            handleFunction={() => accessChat(result)}
+            onClick={setChatUser(result)}
           />
         ))
       )}

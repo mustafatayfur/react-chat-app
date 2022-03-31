@@ -11,7 +11,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const toast = useToast()
     const history = useHistory()
-    
 
     const handleClick = ()=> setShow(!show)
     const submitHandler = async() => {
@@ -45,6 +44,7 @@ const Login = () => {
           position: "bottom",
         })
         localStorage.setItem('userInfo',JSON.stringify(data))
+        
         setLoading(false)
         history.push("/auth")
       } catch (error) {
@@ -59,6 +59,7 @@ const Login = () => {
         setLoading(false)
       }
     }
+
 
   return (
     <VStack spacing="5px">

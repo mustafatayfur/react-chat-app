@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { URL } from '../../config/ChatLogics'
+import { ChatState } from '../../Context/ChatProvider'
 const Signup = () => {
 
     const [show, setShow]= useState(false)
@@ -14,7 +15,6 @@ const Signup = () => {
     const toast = useToast()
     const history = useHistory()
     
-
     const handleClick = ()=> setShow(!show)
     const submitHandler = async() => {
       setLoading(true)
@@ -35,8 +35,9 @@ const Signup = () => {
           },
         }
         const {data} = await axios.post(`${URL}/auth/register`, {name,email, password}, config)
+        console.log(data)
         toast({
-          title:"Registiration Successful",
+          title:"Registiration Successful. Please Login!",
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -44,7 +45,7 @@ const Signup = () => {
         })
         localStorage.setItem('userInfo',JSON.stringify(data))
         setLoading(false)
-        history.push("/auth")
+        history.push("/")
       } catch (error) {
         toast({
           title:"Error Occured!",

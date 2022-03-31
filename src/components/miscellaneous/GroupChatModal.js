@@ -15,6 +15,7 @@ const GroupChatModal = ({children}) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
+
   const { user, chats, setChats } = ChatState();
 
   const handleGroup = (userToAdd) => {
@@ -42,7 +43,7 @@ const GroupChatModal = ({children}) => {
       setLoading(true);
       const config = {
         headers: {
-          Authorization: `Bearer ${user.access_token}`,
+          "Authorization": `Bearer ${user.access_token}`,
         },
       };
       const { data } = await axios.get(`${URL}/user?search=${search}`, config);
@@ -84,7 +85,7 @@ const GroupChatModal = ({children}) => {
         },
       };
       const { data } = await axios.post(
-        `${URL}/chat/create`,
+        `${URL}/chat`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u.id)),
@@ -158,11 +159,11 @@ const GroupChatModal = ({children}) => {
             ) : (
               searchResult
                 ?.slice(0, 4)
-                .map((user) => (
+                .map((user1) => (
                   <UserListItem
-                    key={user.id}
-                    user={user}
-                    handleFunction={() => handleGroup(user)}
+                    key={user1.id}
+                    result={user1}
+                    handleFunction={() => handleGroup(user1)}
                   />
                 ))
             )}

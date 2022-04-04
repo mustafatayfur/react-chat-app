@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { ChatState } from '../Context/ChatProvider';
 import { getSenderFull, URL } from '../config/ChatLogics'
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import ScrollableChat from './ScrollableChat';
+import ScrollableChat from './ScrollableChat'
 import UpdateGroupChatModal from '../components/miscellaneous/UpdateGroupChatModal'
 import ProfileModal from './miscellaneous/ProfileModal';
 import './styles.css'
@@ -18,13 +18,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const { selectedChat, setSelectedChat, user, chatUser, notification, setNotification } =
   ChatState();
-  console.log(selectedChat)
-
+  
   const fetchMessages = async () => {
     if (!selectedChat) return;
 
     try {
-      
       const config = {
         headers: {
           "Content-type" : "application/json",
@@ -33,6 +31,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       const { data } = await axios.get(`${URL}/chat?userId=${selectedChat[0].id}`,config);
       console.log(data)
+      setMessages([messages, ...data])
+      // console.log(messages)
 
       // setChats([data, ...chats]);
       // setSelectedChat(data);
@@ -47,6 +47,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         position: "bottom-left",
       });
     }
+    console.log(messages)
   };
 
 
@@ -63,9 +64,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
       setNewMessage("")
       const { data } = await axios.post(`${URL}/chat`, {sender: user.user_id, receiver: selectedChat[0].id , content:newMessage},config);
-      setMessages([...messages, data]);
+      setNewMessage(data);
       setLoading(false);
-      console.log("messages:", messages)
+      console.log("messages:", newMessage)
   
     } catch (error) {
       toast({
@@ -149,7 +150,7 @@ const typingHandler = (e) => {
               <Input
                 variant="filled"
                 bg="#FFFFFF"
-                placeholder="Enter a message.."
+                placeholder="Enter a message..."
                 value={newMessage}
                 onChange={typingHandler}
               />

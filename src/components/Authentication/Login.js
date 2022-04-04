@@ -26,7 +26,7 @@ const Login = () => {
         setLoading(false)
         return
       }
-      // console.log(email, password)
+     
       try {
         const config = {
           headers:{
@@ -48,6 +48,7 @@ const Login = () => {
         setLoading(false)
         history.push("/auth")
       } catch (error) {
+        console.log(error)
         toast({
           title:"Error Occured!",
           description: error.response.data.message,
